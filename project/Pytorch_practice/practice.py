@@ -128,25 +128,26 @@ x_int16 = x.type(torch.int16)
 x_int16
 
 x = torch.arange(1., 8.)
-x.ndim
+x
 # Reshape
 x_reshape = x.reshape(1, 7)
 x_reshape.ndim
+x_reshape
 # View
 x_view = x.view(1, 7)
 x_view
 # Change view will chage original tensor, too
 x_view[:,0] = 9
 x_view, x
-
-x_stack = torch.stack([x, x, x], dim = 1)
+# stack
+x_stack = torch.stack([x,x], dim = 1)
 x_stack
 
 # Remove extra dimension
 print(f'previous: {x_reshape}')
 print(f'previous shape: {x_reshape.shape}')
 x_squeezed = x_reshape.squeeze()
-x_squeezed.ndim
+x_squeezed
 # Add extra dimension
 x_unsqueezed = x_reshape.unsqueeze(dim = 2)
 x_unsqueezed, x_reshape
@@ -164,6 +165,7 @@ x_permuted
 
 #############################################################
 x = torch.arange(1, 10).reshape(1, 3, 3)
+x
 x[0][1][2]
 x[:,:,2]
 
@@ -201,3 +203,44 @@ print(tensor_gpu, tensor_gpu.device)
 # Move tensor to CPU (if available)
 ## !tensor_gpu.numpy()
 tensor_back_to_cpu = tensor_gpu.cpu().numpy()
+
+
+###############################################################
+#Exercises
+#2. Create a random tensor with shape (7, 7).
+tensor1 = torch.rand(7, 7)
+tensor1
+#3. Perform a matrix multiplication on the tensor from 2 with another random tensor with shape (1, 7)
+tensor2 = torch.rand(1, 7)
+tensor2_T = tensor2.T
+tensor1 @ tensor2_T
+#4. Set the random seed to 0 and do 2 & 3 over again.
+torch.manual_seed(seed = 0)
+tensor3 = torch.rand(2, 3)
+tensor3
+torch.manual_seed(seed = 0)
+tensor3_1 = torch.rand(2, 3)
+tensor3_1
+#5. Set random seed on the GPU
+
+
+#6. Create tensor_A and tensor_B on gpu
+torch.manual_seed(seed = 1234)
+tensor5_1 = torch.rand(2, 3)
+torch.manual_seed(seed = 1234)
+tensor5_2 = torch.rand(2, 3)
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+tengpu5_1 = tensor5_1.to(device)
+tengpu5_2 = tensor5_2.to(device)
+#7. Perform matmul on tensor_A and tensor_B
+ten6 = tengpu5_1 @ tengpu5_2.T
+#8. Find the maximum and minimum values of the output of 7.
+ten6.max()
+ten6.min()
+#9. Find the maximum and minimum index values of the output of 7.
+ten6.argmax()
+ten6.argmin()
+'''10. Make a random tensor with shape (1, 1, 1, 10) and then 
+       create a new tensor with all the 1 dimensions removed to be left with a tensor of shape (10).
+       Set the seed to 7 when you create it and print out the first tensor
+       and it's shape as well as the second tensor and it's shape.'''
