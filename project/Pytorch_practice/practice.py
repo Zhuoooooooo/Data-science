@@ -222,7 +222,7 @@ torch.manual_seed(seed = 0)
 tensor3_1 = torch.rand(2, 3)
 tensor3_1
 #5. Set random seed on the GPU
-
+torch.cuda.manual_seed(1234)
 
 #6. Create tensor_A and tensor_B on gpu
 torch.manual_seed(seed = 1234)
@@ -244,3 +244,8 @@ ten6.argmin()
        create a new tensor with all the 1 dimensions removed to be left with a tensor of shape (10).
        Set the seed to 7 when you create it and print out the first tensor
        and it's shape as well as the second tensor and it's shape.'''
+torch.manual_seed(7)
+tensor7 = torch.rand(1, 1, 1, 10)
+tensor7_sq = tensor7.squeeze()
+tensor7_sq.shape
+tensor7.shape
